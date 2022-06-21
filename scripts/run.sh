@@ -1,0 +1,1 @@
+bash -c "./build/api"
