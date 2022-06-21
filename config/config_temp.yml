@@ -1,13 +1,26 @@
+# http server credintials 
+# replace your gitlab secret token here to insure events are from gitlab 
 http-server :
   port: 59681
   token: hm3RxQ9PN6nN22fXwlXqvJzDtDGsuue3n0CIUP25Ve9cfUoSscuLVUAthNx3ZvHp
 
+# your telegram bot credintials 
 telegram :
   token : your-telegram-bot-token
   chat : your-chat-id-token
 
-hooks-events: 
-  repository: true 
-  push: true 
-  tag-push: true 
-  merege-request: true
+# enable and disable events here 
+events: 
+  comment : true 
+  deployment : true 
+  feature-flag : true 
+  group : true 
+  issue : true 
+  job : true 
+  merge-request : true 
+  pipline : true 
+  push : true 
+  release : true 
+  sub-group : true 
+  tag : true 
+  wiki-page  : true 
