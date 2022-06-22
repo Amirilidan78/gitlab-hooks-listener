@@ -7,6 +7,7 @@ import (
 type Project interface {
 	initial()
 	GetConfig() ConfigProject
+	GetEvents() ConfigEventProject
 }
 
 type project struct {
@@ -30,25 +31,30 @@ func (p *project) initial() {
 	}
 
 	p.Events = ConfigEventProject{
-		Comment:      c.GetBool("projects." + p.Name + "events.comment"),
-		Deployment:   c.GetBool("projects." + p.Name + "events.deployment"),
-		FeatureFlag:  c.GetBool("projects." + p.Name + "events.feature-flag"),
-		Group:        c.GetBool("projects." + p.Name + "events.group"),
-		Issue:        c.GetBool("projects." + p.Name + "events.issue"),
-		Job:          c.GetBool("projects." + p.Name + "events.job"),
-		MergeRequest: c.GetBool("projects." + p.Name + "events.merge-request"),
-		Pipeline:     c.GetBool("projects." + p.Name + "events.pipeline"),
-		Push:         c.GetBool("projects." + p.Name + "events.push"),
-		Release:      c.GetBool("projects." + p.Name + "events.release"),
-		SubGroup:     c.GetBool("projects." + p.Name + "events.sub-group"),
-		Tag:          c.GetBool("projects." + p.Name + "events.tag"),
-		WikiPage:     c.GetBool("projects." + p.Name + "events.wiki-page"),
+		Comment:      c.GetBool("projects." + p.Name + ".events.comment"),
+		Deployment:   c.GetBool("projects." + p.Name + ".events.deployment"),
+		FeatureFlag:  c.GetBool("projects." + p.Name + ".events.feature-flag"),
+		Group:        c.GetBool("projects." + p.Name + ".events.group"),
+		Issue:        c.GetBool("projects." + p.Name + ".events.issue"),
+		Job:          c.GetBool("projects." + p.Name + ".events.job"),
+		MergeRequest: c.GetBool("projects." + p.Name + ".events.merge-request"),
+		Pipeline:     c.GetBool("projects." + p.Name + ".events.pipeline"),
+		Push:         c.GetBool("projects." + p.Name + ".events.push"),
+		Release:      c.GetBool("projects." + p.Name + ".events.release"),
+		SubGroup:     c.GetBool("projects." + p.Name + ".events.sub-group"),
+		Tag:          c.GetBool("projects." + p.Name + ".events.tag"),
+		WikiPage:     c.GetBool("projects." + p.Name + ".events.wiki-page"),
 	}
 }
 
 func (p *project) GetConfig() ConfigProject {
 
 	return p.Config
+}
+
+func (p *project) GetEvents() ConfigEventProject {
+
+	return p.Events
 }
 
 func GetProject(name string) Project {

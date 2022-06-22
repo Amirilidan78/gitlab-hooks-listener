@@ -2,7 +2,7 @@ package reporter
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"strconv"
 )
 
@@ -17,11 +17,15 @@ type PushWebhookResponse struct {
 
 func (gr *gitlabReporter) PushWebhook() {
 
+	if gr.p.GetEvents().Push == false {
+		return
+	}
+
 	message := preparePushWebhookMessage(gr)
 
 	err := gr.t.SendMessage(message)
 
-	fmt.Print(err)
+	log.Print(err)
 }
 
 func preparePushWebhookMessage(gr *gitlabReporter) string {
