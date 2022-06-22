@@ -1,11 +1,14 @@
 package telegram
 
-import "gitlab-hooks-listener/pkg/http_client"
+import (
+	"gitlab-hooks-listener/pkg/http_client"
+)
 
 const baseUrl = "https://api.telegram.org/"
 
 type Telegram interface {
-	SendMessage(message string) error
+	MessageFactory
+	Message
 }
 
 type telegram struct {
@@ -14,13 +17,7 @@ type telegram struct {
 	chat  string
 }
 
-func (t *telegram) SendMessage(message string) error {
+func GetTelegramClient(token string, chat string) Telegram {
 
-	res := SendMessageTelegramResponse{}
-
-	url := baseUrl + t.token + "/sendMessage?chat_id=" + t.chat + "&text=" + message + "&parse_mode=html"
-
-	err := t.hc.SimpleGet(url, &res)
-
-	return err
+	return &telegram{hc: http_client.NewHttpClient(), token: token, chat: chat}
 }

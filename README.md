@@ -25,7 +25,7 @@ file `config/config.yml`
 - job
 - merge-request
 - pipline
-- push
+- push ✅
 - release
 - sub-group
 - tag

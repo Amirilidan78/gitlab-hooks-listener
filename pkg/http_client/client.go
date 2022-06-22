@@ -5,20 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
-	"net"
 	"net/http"
 	"strconv"
 	"time"
 )
 
-func (httpClient *httpClient) SimpleGet(url string, res interface{}) error {
+func (httpClient *httpClient) SimpleGet(url string, body map[string]string, res interface{}) error {
 
-	requestHeaders := map[string]string{
-		"User-Agent": UserAgent,
-		"Accept":     "Application/json",
-	}
-
-	httpResp, _, status, err := httpClient.HttpGet(url, requestHeaders)
+	httpResp, _, status, err := httpClient.HttpGet(url, body)
 
 	if err != nil {
 		return err
@@ -65,19 +59,36 @@ func (httpClient *httpClient) SimplePost(url string, body interface{}, res inter
 	return nil
 }
 
-func (httpClient *httpClient) HttpGet(url string, headers map[string]string) ([]byte, http.Header, int, error) {
+func (httpClient *httpClient) HttpGet(url string, body map[string]string) ([]byte, http.Header, int, error) {
+
 	respBody := []byte("")
+
 	header := http.Header{}
+
 	statusCode := http.StatusBadRequest
 
 	req, err := http.NewRequest("GET", url, nil)
+
 	if err != nil {
 		return respBody, header, statusCode, err
+	}
+
+	headers := map[string]string{
+		"User-Agent": UserAgent,
+		"Accept":     "Application/json",
 	}
 
 	for k, v := range headers {
 		req.Header.Set(k, v)
 	}
+
+	q := req.URL.Query()
+
+	for k, v := range body {
+		q.Add(k, v)
+	}
+
+	req.URL.RawQuery = q.Encode()
 
 	client := http.Client{
 		Timeout: 10 * time.Second,
@@ -135,40 +146,4 @@ func (httpClient *httpClient) HttpPost(url string, body interface{}, headers map
 	header = resp.Header
 	statusCode = resp.StatusCode
 	return finalRes, header, statusCode, err
-}
-
-func (httpClient *httpClient) Ping(url string) (int, error) {
-
-	client := http.Client{
-		Timeout: time.Second * 5,
-	}
-
-	req, err := http.NewRequest("HEAD", url, nil)
-
-	if err != nil {
-		return 0, err
-	}
-
-	resp, err := client.Do(req)
-
-	if err != nil {
-		return 0, err
-	}
-
-	_ = resp.Body.Close()
-
-	return resp.StatusCode, nil
-}
-
-func (httpClient *httpClient) IsPortOpen(ip string, port string) (bool, error) {
-
-	timeoutTime := time.Second * 5
-
-	conn, err := net.DialTimeout("tcp", net.JoinHostPort(ip, port), timeoutTime)
-
-	if err == nil {
-		defer conn.Close()
-	}
-
-	return err == nil, err
 }

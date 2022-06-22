@@ -29,5 +29,5 @@ type gitlabReporter struct {
 }
 
 func NewGitlabReporter(c echo.Context, p project.Project) GitlabReporter {
-	return &gitlabReporter{c: c, p: p, t: telegram.GetTelegramClient()}
+	return &gitlabReporter{c: c, p: p, t: telegram.GetTelegramClient(p.GetConfig().TelegramToken, p.GetConfig().TelegramChat)}
 }
