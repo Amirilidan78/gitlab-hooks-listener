@@ -1,12 +1,25 @@
 package api
 
-import "gitlab-hooks-listener/src/api/handlers"
+import (
+	"encoding/json"
+	"fmt"
+	"gitlab-hooks-listener/src/api/handlers"
+)
 
-func (a *api) registerRoutes() {
+func (a *api) RegisterRoutes() {
 
 	router := a.hs.GetEcho()
 
-	tpg := router.Group("/api")
-	tpg.GET("/test", handlers.HandleTest)
+	tpg := router.Group("/projects")
+	tpg.GET("/:name/events", handlers.HandleGitlabEvent)
 
+}
+
+func (a *api) PrintRegisteredRoutes() {
+
+	data, err := json.MarshalIndent(a.hs.GetEcho().Routes(), "", "  ")
+
+	if err == nil {
+		fmt.Println(data)
+	}
 }

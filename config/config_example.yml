@@ -1,0 +1,24 @@
+http-server :
+  port: 59681
+
+projects :
+
+  project-name :
+    gitlab-secret : secret-goes-here
+    telegram-token : telegram-api-token-goes-here
+    telegram-chat : telegram-chat-id-goes-here
+    events :
+      comment: true
+      deployment: true
+      feature-flag: true
+      group: true
+      issue: true
+      job: true
+      merge-request: true
+      pipeline: true
+      push: true
+      release: true
+      sub-group: true
+      tag: true
+      wiki-page: true
+

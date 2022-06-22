@@ -6,7 +6,8 @@ import (
 
 type Api interface {
 	StartHttpServer()
-	registerRoutes()
+	RegisterRoutes()
+	PrintRegisteredRoutes()
 }
 
 type api struct {
@@ -14,5 +15,6 @@ type api struct {
 }
 
 func NewApiService() Api {
+
 	return &api{http_server.GetHttpServer()}
 }

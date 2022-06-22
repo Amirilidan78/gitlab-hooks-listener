@@ -8,6 +8,10 @@ func main() {
 
 	service := api.NewApiService()
 
+	service.RegisterRoutes()
+
+	service.PrintRegisteredRoutes()
+
 	service.StartHttpServer()
 
 }
