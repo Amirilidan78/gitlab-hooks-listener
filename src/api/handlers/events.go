@@ -7,8 +7,8 @@ import (
 	"net/http"
 )
 
-const HeaderGitlabEvent = "Gitlab-Event"
-const GitlabSecretHeader = "Gitlab-Token"
+const HeaderGitlabEvent = "X-Gitlab-Event"
+const GitlabSecretHeader = "X-Gitlab-Token"
 
 func HandleGitlabEvent(c echo.Context) error {
 
