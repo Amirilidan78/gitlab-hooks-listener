@@ -1,5 +1,5 @@
 package reporter
 
-func (gr *gitlabReporter) JobWebhook()  {
+func (gr *gitlabReporter) JobWebhook() {
 
 }

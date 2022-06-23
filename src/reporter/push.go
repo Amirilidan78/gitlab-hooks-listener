@@ -6,8 +6,6 @@ import (
 	"strconv"
 )
 
-const PushWebhookTitle = "Push"
-
 type PushWebhookResponse struct {
 	Username     string           `json:"user_name"`
 	Project      ProjectResponse  `json:"project"`
@@ -35,6 +33,7 @@ func preparePushWebhookMessage(gr *gitlabReporter) string {
 	err := json.NewDecoder(gr.c.Request().Body).Decode(&body)
 
 	if err != nil {
+		log.Print(err)
 		return "err in parsing data"
 	}
 
@@ -43,7 +42,7 @@ func preparePushWebhookMessage(gr *gitlabReporter) string {
 	totalCommits := strconv.Itoa(body.TotalCommits)
 	commits := body.Commits
 
-	message := gr.t.Bold(PushWebhookTitle)
+	message := gr.t.Bold(gr.p.GetTitles().Push)
 	message = message + gr.t.NewLine()
 	message = message + gr.t.Bold(username)
 	message = message + gr.t.Text("pushed")

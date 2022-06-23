@@ -8,12 +8,14 @@ type Project interface {
 	initial()
 	GetConfig() ConfigProject
 	GetEvents() ConfigEventProject
+	GetTitles() ConfigTitlesProject
 }
 
 type project struct {
 	Name   string
 	Config ConfigProject
 	Events ConfigEventProject
+	Titles ConfigTitlesProject
 }
 
 func (p *project) initial() {
@@ -45,6 +47,22 @@ func (p *project) initial() {
 		Tag:          c.GetBool("projects." + p.Name + ".events.tag"),
 		WikiPage:     c.GetBool("projects." + p.Name + ".events.wiki-page"),
 	}
+
+	p.Titles = ConfigTitlesProject{
+		Comment:      c.GetString("titles.comment"),
+		Deployment:   c.GetString("titles.deployment"),
+		FeatureFlag:  c.GetString("titles.feature-flag"),
+		Group:        c.GetString("titles.group"),
+		Issue:        c.GetString("titles.issue"),
+		Job:          c.GetString("titles.job"),
+		MergeRequest: c.GetString("titles.merge-request"),
+		Pipeline:     c.GetString("titles.pipeline"),
+		Push:         c.GetString("titles.push"),
+		Release:      c.GetString("titles.release"),
+		SubGroup:     c.GetString("titles.sub-group"),
+		Tag:          c.GetString("titles.tag"),
+		WikiPage:     c.GetString("titles.wiki-page"),
+	}
 }
 
 func (p *project) GetConfig() ConfigProject {
@@ -55,6 +73,11 @@ func (p *project) GetConfig() ConfigProject {
 func (p *project) GetEvents() ConfigEventProject {
 
 	return p.Events
+}
+
+func (p *project) GetTitles() ConfigTitlesProject {
+
+	return p.Titles
 }
 
 func GetProject(name string) Project {

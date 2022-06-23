@@ -15,6 +15,7 @@ file `config/config.yml`
 - `project.*.telegram-token` [telegram bot api token ](https://core.telegram.org/bots/api#authorizing-your-bot)
 - `project.*.telegram-chat` [your telegram chat id](https://core.telegram.org/bots/api#chat) 
 - `project.*.events` enable or disable events that you want to receive here (push,merge-request,...)
+- `titles.*` here you can config what title each event must have
 
 ### Gitlab available events  
 - comment
@@ -24,7 +25,7 @@ file `config/config.yml`
 - issue
 - job
 - merge-request
-- pipline
+- pipeline ✅
 - push ✅
 - release
 - sub-group
