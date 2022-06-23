@@ -11,7 +11,7 @@ func (a *api) RegisterRoutes() {
 	router := a.hs.GetEcho()
 
 	tpg := router.Group("/projects")
-	tpg.GET("/:name/events", handlers.HandleGitlabEvent)
+	tpg.POST("/:name/events", handlers.HandleGitlabEvent)
 
 }
 
