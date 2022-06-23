@@ -32,3 +32,4 @@ file `config/config.yml`
 - tag
 - wiki-page 
 
+check `./docs/examples` folder for telegram messages examples sent by application
